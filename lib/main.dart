@@ -3,7 +3,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:signfun/profile_screen.dart';
-
+import 'package:signfun/registration.dart';
+import 'package:flutter/gestures.dart';
 void main() {
   runApp(const MyApp());
 }
@@ -59,6 +60,7 @@ class LoginScreen extends StatefulWidget {
   State<LoginScreen> createState() => _LoginScreenState();
 }
 
+
 class _LoginScreenState extends State<LoginScreen> {
   static Future<User?> loginUsingEmailPassword({required String email, required String password, required BuildContext context}) async{
     FirebaseAuth  auth = FirebaseAuth.instance;
@@ -69,6 +71,7 @@ user = userCredential.user;
 
   } on FirebaseAuthException catch (e){
       if (e.code == 'user-not-found'){
+
   print('no user found using this email');
 
       }
@@ -86,8 +89,8 @@ user = userCredential.user;
     mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.start,
       children:  [
- const Text('my application ',
-    style:TextStyle(
+      const Text('Log in to',
+       style:TextStyle(
         color: Colors.black,
         fontSize: 26,
         fontWeight: FontWeight.bold,
@@ -95,7 +98,7 @@ user = userCredential.user;
 
 
 ),
-        const Text('Login to Pharma',
+         const Text('PharmaX',
           style: TextStyle(
               color: Colors.black,
               fontSize: 44,
@@ -106,11 +109,11 @@ user = userCredential.user;
   height: 44,
 ),
          TextField(
-          controller: _emailController,
-  keyboardType: TextInputType.emailAddress,
-  decoration:  const InputDecoration(
-    hintText: "User Email",
-    prefixIcon:  Icon(Icons.mail, color: Colors.black),
+            controller: _emailController,
+            keyboardType: TextInputType.emailAddress,
+            decoration:  const InputDecoration(
+            hintText: "User Email",
+              prefixIcon:  Icon(Icons.mail, color: Colors.black),
   ),
 ),
         const SizedBox(
@@ -128,19 +131,20 @@ user = userCredential.user;
         const  SizedBox(
           height: 12,
         ),
-        const   Text(
-          "Forgot Password ?",
-              style: TextStyle (color: Colors.blue),
 
 
+           Text( "Forgot Password ?",
+              style: TextStyle (color: Colors.pinkAccent),
         ),
+
+
         const   SizedBox(
           height: 88,
         ),
            Container(
     width: double.infinity,
     child : RawMaterialButton(
-        fillColor: const Color(0xFF00069FE),
+        fillColor: Colors.pinkAccent,
         elevation: 0.0,
         padding: const EdgeInsets.symmetric(vertical: 20.0),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
@@ -151,20 +155,58 @@ user = userCredential.user;
           if(user != null) {
             Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfileScreen()));
           }
+          else {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Register(toggleView: noSuchMethod)));
 
 
+          }
         },
           child: Text('Login',
           style:  TextStyle(
           color: Colors.white,
           fontSize: 18,
         ),
-        )
+        ),
+
     ),
 
         ),
+
       ],
+
     ),
+
     );
   }
 }
+
+
+// import 'package:flutter/material.dart';
+// import 'package:flutter/services.dart';
+// import 'package:login_signup/constants/constants.dart';
+// import 'package:login_signup/ui/signin.dart';
+// import 'package:login_signup/ui/signup.dart';
+// import 'package:login_signup/ui/splashscreen.dart';
+//
+// void main() => runApp(MyApp());
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     SystemChrome.setPreferredOrientations([
+//       DeviceOrientation.portraitUp,
+//       DeviceOrientation.portraitDown,
+//     ]);
+//     return MaterialApp(
+//       debugShowCheckedModeBanner: false,
+//       title: "Login",
+//       theme: ThemeData(primaryColor: Colors.orange[200]),
+//       routes: <String, WidgetBuilder>{
+//         SPLASH_SCREEN: (BuildContext context) =>  SplashScreen(),
+//         SIGN_IN: (BuildContext context) =>  SignInPage(),
+//         SIGN_UP: (BuildContext context) =>  SignUpScreen(),
+//       },
+//       initialRoute: SPLASH_SCREEN,
+//     );
+//   }
+// }
