@@ -1,4 +1,4 @@
-# signfun
+# Aurora App
 
 A new Flutter project.
 
