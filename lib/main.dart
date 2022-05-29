@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:signfun/registration.dart';
 import 'package:flutter/gestures.dart';
+import 'package:signfun/profile_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -148,12 +149,14 @@ class _LoginScreenState extends State<LoginScreen> {
                     context: context);
 
                 print(user);
-                if(user != null) {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfilePage()));
-          }
-          else {
-            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Register(toggleView: noSuchMethod)));
-            }
+                if (user != null) {
+                  Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(builder: (context) => ProfilePage()));
+                } else {
+                  Navigator.of(context).pushReplacement(MaterialPageRoute(
+                      builder: (context) =>
+                          Register(toggleView: noSuchMethod)));
+                }
               },
               child: Text(
                 'Login',
