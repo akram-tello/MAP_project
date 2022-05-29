@@ -1,25 +1,14 @@
+// import 'dart:html';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:signfun/main21.dart';
 import 'package:flutter/material.dart';
+import 'read.dart';
 
-class editnote extends StatefulWidget {
-  DocumentSnapshot docid;
-  editnote({required this.docid});
-
-  @override
-  _editnoteState createState() => _editnoteState();
-}
-
-class _editnoteState extends State<editnote> {
+class create extends StatelessWidget {
   TextEditingController Medicine = TextEditingController();
   TextEditingController Price = TextEditingController();
 
-  @override
-  void initState() {
-    Medicine = TextEditingController(text: widget.docid.get('Medicine'));
-    Price = TextEditingController(text: widget.docid.get('Price'));
-    super.initState();
-  }
+  CollectionReference ref = FirebaseFirestore.instance.collection('MyMeds');
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +19,7 @@ class _editnoteState extends State<editnote> {
         actions: [
           MaterialButton(
             onPressed: () {
-              widget.docid.reference.update({
+              ref.add({
                 'Medicine': Medicine.text,
                 'Price': Price.text,
               }).whenComplete(() {
@@ -38,16 +27,8 @@ class _editnoteState extends State<editnote> {
                     context, MaterialPageRoute(builder: (_) => Home()));
               });
             },
-            child: Text("Update"),
-          ),
-          MaterialButton(
-            onPressed: () {
-              widget.docid.reference.delete().whenComplete(() {
-                Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (_) => Home()));
-              });
-            },
-            child: Text("Delete"
+            child: Text(
+              "Create",
             ),
           ),
         ],
@@ -60,7 +41,7 @@ class _editnoteState extends State<editnote> {
               child: TextField(
                 controller: Medicine,
                 decoration: InputDecoration(
-                  hintText: 'Medicine',
+                  hintText: 'Add a New Medicine',
                 ),
               ),
             ),
@@ -75,7 +56,7 @@ class _editnoteState extends State<editnote> {
                   expands: false,
                   maxLines: null,
                   decoration: InputDecoration(
-                    hintText: 'Price',
+                    hintText: 'Add The Price',
                   ),
                 ),
               ),
@@ -83,7 +64,6 @@ class _editnoteState extends State<editnote> {
           ],
         ),
       ),
-
     );
   }
 }

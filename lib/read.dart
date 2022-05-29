@@ -1,8 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:signfun/addnote.dart';
+import 'package:signfun/create.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'editnote.dart';
+import 'package:signfun/updateDelete.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,7 +19,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-
       title: "Pharmacy Medicine ",
       color: Colors.pinkAccent,
       theme: ThemeData(
@@ -45,15 +44,24 @@ class _HomeState extends State<Home> {
         backgroundColor: Colors.pinkAccent,
         onPressed: () {
           Navigator.pushReplacement(
-              context, MaterialPageRoute(builder: (_) => addnote()));
+              context, MaterialPageRoute(builder: (_) => create()));
         },
         child: Icon(
           Icons.add,
         ),
       ),
       appBar: AppBar(
-        title: Text('Pharmacy Medicine'),
         backgroundColor: Colors.pinkAccent,
+        elevation: 0.0,
+        actions: <Widget>[
+          FlatButton.icon(
+            icon: Icon(Icons.arrow_back),
+            label: Text(''),
+            onPressed: () => Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Home())),
+          ),
+        ],
+        title: Text('Pharmacy Medicine '),
       ),
       body: StreamBuilder(
         stream: _usersStream,
@@ -76,7 +84,11 @@ class _HomeState extends State<Home> {
               itemBuilder: (_, index) {
                 return GestureDetector(
                   onTap: () {
-                    Navigator.pushReplacement( context, MaterialPageRoute(builder: (_) => editnote(docid: snapshot.data!.docs[index]),
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            updateDelete(docid: snapshot.data!.docs[index]),
                       ),
                     );
                   },

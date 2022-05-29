@@ -1,14 +1,25 @@
-// import 'dart:html';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:signfun/read.dart';
 import 'package:flutter/material.dart';
-import 'main21.dart';
 
-class addnote extends StatelessWidget {
+class updateDelete extends StatefulWidget {
+  DocumentSnapshot docid;
+  updateDelete({required this.docid});
+
+  @override
+  _updateDeleteState createState() => _updateDeleteState();
+}
+
+class _updateDeleteState extends State<updateDelete> {
   TextEditingController Medicine = TextEditingController();
   TextEditingController Price = TextEditingController();
 
-  CollectionReference ref = FirebaseFirestore.instance.collection('MyMeds');
+  @override
+  void initState() {
+    Medicine = TextEditingController(text: widget.docid.get('Medicine'));
+    Price = TextEditingController(text: widget.docid.get('Price'));
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +30,7 @@ class addnote extends StatelessWidget {
         actions: [
           MaterialButton(
             onPressed: () {
-              ref.add({
+              widget.docid.reference.update({
                 'Medicine': Medicine.text,
                 'Price': Price.text,
               }).whenComplete(() {
@@ -27,9 +38,16 @@ class addnote extends StatelessWidget {
                     context, MaterialPageRoute(builder: (_) => Home()));
               });
             },
-            child: Text(
-              "Create",
-            ),
+            child: Text("Update"),
+          ),
+          MaterialButton(
+            onPressed: () {
+              widget.docid.reference.delete().whenComplete(() {
+                Navigator.pushReplacement(
+                    context, MaterialPageRoute(builder: (_) => Home()));
+              });
+            },
+            child: Text("Delete"),
           ),
         ],
       ),
@@ -41,7 +59,7 @@ class addnote extends StatelessWidget {
               child: TextField(
                 controller: Medicine,
                 decoration: InputDecoration(
-                  hintText: 'Add a New Medicine',
+                  hintText: 'Medicine',
                 ),
               ),
             ),
@@ -56,19 +74,14 @@ class addnote extends StatelessWidget {
                   expands: false,
                   maxLines: null,
                   decoration: InputDecoration(
-                    hintText: 'Add The Price',
+                    hintText: 'Price',
                   ),
                 ),
-
               ),
-
             ),
-
           ],
-
-
-    ),
-    ),
+        ),
+      ),
     );
   }
 }
