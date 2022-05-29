@@ -148,11 +148,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     context: context);
 
                 print(user);
-                if (user != null) {
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (context) =>
-                          Register(toggleView: noSuchMethod)));
-                }
+                if(user != null) {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> ProfilePage()));
+          }
+          else {
+            Navigator.of(context).pushReplacement(MaterialPageRoute(builder: (context)=> Register(toggleView: noSuchMethod)));
+            }
               },
               child: Text(
                 'Login',
