@@ -58,7 +58,7 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.arrow_back),
             label: Text(''),
             onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Home())),
+                MaterialPageRoute(builder: (context) => ProfilePage())),
           ),
         ],
         title: Text('Pharmacy Medicine '),
