@@ -1,74 +1,38 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:signfun/create.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:signfun/updateDelete.dart';
-import 'package:signfun/profile_screen.dart';
+import 'addpost.dart';
+import 'editpost.dart';
 
-void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
-class MyApp extends StatefulWidget {
+class posts extends StatefulWidget {
   @override
-  _MyAppState createState() => _MyAppState();
+  _postsState createState() => _postsState();
 }
 
-class _MyAppState extends State<MyApp> {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "Pharmacy Medicine ",
-      color: Colors.pinkAccent,
-      theme: ThemeData(
-        primaryColor: Colors.pinkAccent,
-      ),
-      home: Home(),
-    );
-  }
-}
-
-class Home extends StatefulWidget {
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<Home> {
+class _postsState extends State<posts> {
   final Stream<QuerySnapshot> _usersStream =
-      FirebaseFirestore.instance.collection('MyMeds').snapshots();
+      FirebaseFirestore.instance.collection('posts').snapshots();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.pinkAccent,
         onPressed: () {
           Navigator.pushReplacement(
               context, MaterialPageRoute(builder: (_) => create()));
         },
+        backgroundColor: Colors.pinkAccent,
         child: Icon(
           Icons.add,
         ),
       ),
       appBar: AppBar(
+        title: Text('Medicine'),
         backgroundColor: Colors.pinkAccent,
-        elevation: 0.0,
-        actions: <Widget>[
-          FlatButton.icon(
-            icon: Icon(Icons.arrow_back),
-            label: Text(''),
-            onPressed: () => Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => ProfilePage())),
-          ),
-        ],
-        title: Text('Pharmacy Medicine '),
       ),
       body: StreamBuilder(
         stream: _usersStream,
         builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
           if (snapshot.hasError) {
-            return Text("Something Went Wrong");
+            return Text("something is wrong");
           }
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -89,7 +53,7 @@ class _HomeState extends State<Home> {
                       context,
                       MaterialPageRoute(
                         builder: (_) =>
-                            updateDelete(docid: snapshot.data!.docs[index]),
+                            editnote(docid: snapshot.data!.docs[index]),
                       ),
                     );
                   },
@@ -110,14 +74,21 @@ class _HomeState extends State<Home> {
                               color: Colors.black,
                             ),
                           ),
-                          title: Text(
+                          leading: Text(
                             snapshot.data!.docChanges[index].doc['Medicine'],
                             style: TextStyle(
                               fontSize: 20,
                             ),
                           ),
-                          subtitle: Text(
+
+                          title: Text(
                             snapshot.data!.docChanges[index].doc['Price'],
+                            style: TextStyle(
+                              fontSize: 15,
+                            ),
+                          ),
+                          subtitle: Text(
+                            snapshot.data!.docChanges[index].doc['Description'],
                             style: TextStyle(
                               fontSize: 15,
                             ),
@@ -128,6 +99,32 @@ class _HomeState extends State<Home> {
                           ),
                         ),
                       ),
+
+
+                      // Padding(
+                      //   padding: EdgeInsets.only(
+                      //     left: 3,
+                      //     right: 3,
+                      //   ),
+                      //   child: ListTile(
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(10),
+                      //       side: BorderSide(
+                      //         color: Colors.black,
+                      //       ),
+                      //     ),
+                      //     title: Text(
+                      //       snapshot.data!.docChanges[index].doc['Medicine'],
+                      //       style: TextStyle(
+                      //         fontSize: 20,
+                      //       ),
+                      //     ),
+                      //     contentPadding: EdgeInsets.symmetric(
+                      //       vertical: 12,
+                      //       horizontal: 16,
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 );
