@@ -71,13 +71,6 @@ class _PatientState extends State<Patient> {
             ),
 
           ),
-          // IconButton(
-          //   onPressed: () {
-          //     logout(context);
-          //   },
-          //   icon: Icon(Icons.logout),
-          // ),
-
           ],
       ),
 
