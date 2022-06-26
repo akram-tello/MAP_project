@@ -91,18 +91,6 @@ class _patientPostState extends State<patientPost> {
 
                         child: ListTile(
 
-
-                            // onLongPress: () {
-                            //   Share.share('Hey Do You Have  '+snapshot.data!.docChanges[index].doc['Medicine']
-                            //       +'  My Phone Number Is  '+ snapshot.data!.docChanges[index].doc['Price']
-                            //       +'  And My Symptoms Are  '+ snapshot.data!.docChanges[index].doc['Description']);
-                            //
-                            // },
-
-
-
-
-
                           shape: RoundedRectangleBorder(
 
                             borderRadius: BorderRadius.circular(5),
@@ -175,15 +163,6 @@ class _patientPostState extends State<patientPost> {
                             vertical: 12,
                             horizontal: 16,
                           ),
-
-                          // IconButton(
-                          //   onPressed: () {
-                          //     Share.share('Hey Do You Have  '+snapshot.data!.docChanges[index].doc['Medicine']
-                          //         +'  My Phone Number Is  '+ snapshot.data!.docChanges[index].doc['Price']
-                          //         +'  And My Symptoms Are  '+ snapshot.data!.docChanges[index].doc['Description']);
-                          //   },
-                          //   icon: Icon(Icons.share),
-                          // ),
 
                         ),
 
